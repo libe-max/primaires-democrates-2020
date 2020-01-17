@@ -1,11 +1,14 @@
+const currentProtocol = typeof window !== 'undefined' ? window.location.protocol : 'http:'
+const currentHostname = typeof window !== 'undefined' ? window.location.hostname : 'localhost'
+
 const config = {
   meta: {
     author: 'Maxime Fabas',
-    title: 'Libé apps template',
+    title: 'Primaire démocrates 2020',
     url: '',
     description: '',
     image: '',
-    xiti_id: 'test',
+    xiti_id: 'primaire-democrates-2020',
     tweet: 'Some tweet text',
   },
   tracking: {
@@ -16,12 +19,12 @@ const config = {
   show_header: true,
   statics_url: process.env.NODE_ENV === 'production'
     ? 'https://www.liberation.fr/apps/static'
-    : `${window.location.protocol}//${window.location.hostname}:3003`,
+    : `${currentProtocol}//${currentHostname}:3003`,
   api_url: process.env.NODE_ENV === 'production'
     ? 'https://libe-labo-2.site/api'
-    : `${window.location.protocol}//${window.location.hostname}:3004/api`,
-  stylesheet: 'libe-apps-template.css', // The name of the css file hosted at ${statics_url}/styles/apps/
-  spreadsheet: undefined // The spreadsheet providing data to the app
+    : `${currentProtocol}//${currentHostname}:3004/api`,
+  stylesheet: 'primaire-democrates.css',
+  spreadsheet: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT99eXOlXkLDOGU7ucGzQ0G9zZEsQkNuDdp8iMy58gkW9TEnMpjn9cnNmpgnPgz6PU0HdVbjciIbkAp/pub?gid=1987543395&single=true&output=tsv'
 }
 
 module.exports = config
