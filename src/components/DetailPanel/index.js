@@ -1,22 +1,21 @@
 import React, { useState } from 'react'
-import PageTitle from 'libe-components/lib/text-levels/PageTitle'
 
 /*
- *   StickyHeader
+ *   DetailPanel
  *   ------------------------------------------------------
  *
  *   PROPS
- *   -
+ *   detailPanelMode, detailPanelContent
  *   
  */
 
-export default function StickyHeader (props) {
+export default function DetailPanel (props) {
   /* * * * * * * * * * * * * * * *
    *
    * PROPS & STATE
    *
    * * * * * * * * * * * * * * * */
-  const { prop } = props
+  const { detailPanelMode, detailPanelContent } = props
   const [state, setState] = useState(null)
 
   /* * * * * * * * * * * * * * * *
@@ -30,7 +29,7 @@ export default function StickyHeader (props) {
    * ASSIGN CLASSES
    *
    * * * * * * * * * * * * * * * */
-  const c = 'primaires-democrates-sticky-header'
+  const c = 'primaires-democrates-detail-panel'
   const classes = [c]
 
   /* * * * * * * * * * * * * * * *
@@ -39,9 +38,8 @@ export default function StickyHeader (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    <PageTitle>
-      <span>PRIMAIRES DÉMOCRATES</span>
-      <span>LA COURSE À L'INVESTITURE</span>
-    </PageTitle>
+    DETAIL PANEL<br />
+    detailPanelMode: {`${detailPanelMode}`}<br />
+    detailPanelContent: {`${detailPanelContent}`}
   </div>
 }

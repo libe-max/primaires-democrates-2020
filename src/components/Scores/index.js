@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import Candidate from '../Candidate'
 
 /*
  *   Scores
  *   ------------------------------------------------------
  *
  *   PROPS
- *   -
+ *   candidates, activateCandidate
  *   
  */
 
@@ -15,7 +16,7 @@ export default function Scores (props) {
    * PROPS & STATE
    *
    * * * * * * * * * * * * * * * */
-  const { prop } = props
+  const { candidates, activateCandidate } = props
   const [state, setState] = useState(null)
 
   /* * * * * * * * * * * * * * * *
@@ -23,6 +24,17 @@ export default function Scores (props) {
    * ACTION HANDLERS
    *
    * * * * * * * * * * * * * * * */
+
+   /* * * * * * * * * * * * * * * *
+   *
+   * INNER LOGIC
+   *
+   * * * * * * * * * * * * * * * */
+  const sortedCandidates = candidates.sort((canA, canB) => {
+    const scoreCanA = canA._scores.reduce((curr, state) => curr + Number(state.delegates || 0), 0)
+    const scoreCanB = canB._scores.reduce((curr, state) => curr + Number(state.delegates || 0), 0)
+    return scoreCanB - scoreCanA
+  })
 
   /* * * * * * * * * * * * * * * *
    *
@@ -38,6 +50,9 @@ export default function Scores (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    SCORES
+    {candidates.map(candidate => <Candidate
+      key={candidate.id}
+      activateCandidate={activateCandidate}
+      value={candidate} />)}
   </div>
 }

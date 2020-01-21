@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import PageTitle from 'libe-components/lib/text-levels/PageTitle'
+import LibeLaboLogo from 'libe-components/lib/blocks/LibeLaboLogo'
+import ArticleMeta from 'libe-components/lib/blocks/ArticleMeta'
 
 /*
  *   Header
@@ -38,9 +41,17 @@ export default function Header (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    <h1>
+    <PageTitle>
       <span>PRIMAIRES DÉMOCRATES</span>
       <span>LA COURSE À L'INVESTITURE</span>
-    </h1>
+    </PageTitle>
+    <ArticleMeta
+      publishedOn='02/09/2019 17:13'
+      updatedOn='03/09/2019 10:36'
+      authors={[
+        { name: 'Jean-Sol Partre', role: '', link: 'www.liberation.fr' },
+        { name: 'Maxime Fabas', role: 'Production', link: 'lol.com' }
+      ]} />
+    <LibeLaboLogo target='blank' />
   </div>
 }

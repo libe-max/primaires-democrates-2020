@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 import { parseTsv } from 'libe-utils'
 import Loader from 'libe-components/lib/blocks/Loader'
 import LoadingError from 'libe-components/lib/blocks/LoadingError'
@@ -12,6 +13,7 @@ import Scores from './components/Scores'
 import Calendar from './components/Calendar'
 import Navigation from './components/Navigation'
 import ReadAlso from './components/ReadAlso'
+import DetailPanel from './components/DetailPanel'
 
 export default class App extends Component {
   /* * * * * * * * * * * * * * * * *
@@ -25,7 +27,14 @@ export default class App extends Component {
     this.state = {
       loading_sheet: true,
       error_sheet: null,
-      data_sheet: [],
+      data_sheet: {
+        candidates: [],
+        states: [],
+        links: [],
+      },
+      show_detail_panel: false,
+      detail_panel_mode: null,
+      detail_panel_content: null,
       keystrokes_history: [],
       konami_mode: false
     }
@@ -33,6 +42,8 @@ export default class App extends Component {
     this.fetchCredentials = this.fetchCredentials.bind(this)
     this.listenToKeyStrokes = this.listenToKeyStrokes.bind(this)
     this.watchKonamiCode = this.watchKonamiCode.bind(this)
+    this.showExplanations = this.showExplanations.bind(this)
+    this.activateCandidate = this.activateCandidate.bind(this)
   }
 
   /* * * * * * * * * * * * * * * * *
@@ -54,21 +65,6 @@ export default class App extends Component {
    * * * * * * * * * * * * * * * * */
   componentWillUnmount () {
     document.removeEventListener('keydown', this.listenToKeyStrokes)
-  }
-
-  /* * * * * * * * * * * * * * * * *
-   *
-   * SHOULD UPDATE
-   *
-   * * * * * * * * * * * * * * * * */
-  shouldComponentUpdate (props, nextState) {
-    const changedKeys = []
-    Object.keys(nextState).forEach(key => {
-      if (this.state[key] !== nextState[key]) changedKeys.push(key)
-    })
-    if (changedKeys.length === 1 &&
-      changedKeys.includes('keystrokes_history')) return false
-    return true
   }
 
   /* * * * * * * * * * * * * * * * *
@@ -109,15 +105,16 @@ export default class App extends Component {
       const data = await reach.text()
       const [candidates, states, links] = parseTsv(data, [62, 5, 2])
       const transformedCandidates = candidates.map(candidate => {
-        const result = {}
+        const result = { _scores: [] }
         Object.keys(candidate).forEach(key => {
           if (key.match(/^id|name|bio|photo|racing$/)) result[key] = candidate[key]
           else {
             const splValue = candidate[key].split(';')
-            result[key] = {
+            result._scores.push({
+              state: key,
               delegates: Number((splValue[0] || '0').trim()),
               percentage: Number((splValue[1] || '0%').trim().replace(/%/igm, '')) / 100
-            }
+            })
           }
         })
         return result
@@ -172,6 +169,32 @@ export default class App extends Component {
 
   /* * * * * * * * * * * * * * * * *
    *
+   * SHOW EXPLANATIONS
+   *
+   * * * * * * * * * * * * * * * * */
+  showExplanations () {
+    this.setState({
+      show_detail_panel: true,
+      detail_panel_mode: 'explanations',
+      detail_panel_content: null
+    })
+  }
+
+  /* * * * * * * * * * * * * * * * *
+   *
+   * ACTIVATE CANDIDATE
+   *
+   * * * * * * * * * * * * * * * * */
+  activateCandidate (id) {
+    this.setState({
+      show_detail_panel: true,
+      detail_panel_mode: 'candidate-bio',
+      detail_panel_content: id
+    })
+  }
+
+  /* * * * * * * * * * * * * * * * *
+   *
    * RENDER
    *
    * * * * * * * * * * * * * * * * */
@@ -187,15 +210,32 @@ export default class App extends Component {
     if (state.loading_sheet) return <div className={classes.join(' ')}><div className='lblb-default-apps-loader'><Loader /></div></div>
     if (state.error_sheet) return <div className={classes.join(' ')}><div className='lblb-default-apps-error'><LoadingError /></div></div>
 
+    /* Inner logic */
+    const today = moment().endOf('day')
+    const transformedStates = state.data_sheet.states.map(state => {
+      const voteDate = moment(state.date, 'DD/MM/YYYY')
+      return { ...state, _passed: voteDate < today }
+    })
+    const totalDelegates = transformedStates.reduce((total, state) => total + Number(state.nb_delegates), 0)
+    const electDelegate = transformedStates.reduce((total, state) => state._passed ? total + Number(state.nb_delegates) : total, 0)
+    const advancement = electDelegate / totalDelegates
+
     /* Display component */
     return <div className={classes.join(' ')}>
       <Header />
       <StickyHeader />
-      <Intro />
-      <Scores />
+      <Intro
+        advancement={advancement}
+        showExplanations={this.showExplanations} />
+      <Scores
+        candidates={state.data_sheet.candidates}
+        activateCandidate={this.activateCandidate} />
       <Calendar />
       <Navigation />
       <ReadAlso />
+      <DetailPanel
+        detailPanelMode={state.detail_panel_mode}
+        detailPanelContent={state.detail_panel_content} />
       <div className='lblb-default-apps-footer'>
         <ShareArticle short iconsOnly tweet={props.meta.tweet} url={props.meta.url} />
         <ArticleMeta
