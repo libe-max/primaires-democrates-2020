@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 /*
  *   Navigation
@@ -10,20 +10,6 @@ import React, { useState } from 'react'
  */
 
 export default function Navigation (props) {
-  /* * * * * * * * * * * * * * * *
-   *
-   * PROPS & STATE
-   *
-   * * * * * * * * * * * * * * * */
-  const { prop } = props
-  const [state, setState] = useState(null)
-
-  /* * * * * * * * * * * * * * * *
-   *
-   * ACTION HANDLERS
-   *
-   * * * * * * * * * * * * * * * */
-
   /* * * * * * * * * * * * * * * *
    *
    * ASSIGN CLASSES
@@ -38,6 +24,9 @@ export default function Navigation (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    NAVIGATION
+    <button>La course</button>
+    <button>Le calendrier</button>
+    <button>Retour à la course</button>
+    <button>Retour au calendrier</button>
   </div>
 }

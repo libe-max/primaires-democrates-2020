@@ -1,28 +1,36 @@
 import React from 'react'
 
 /*
- *   ReadAlso
+ *   CandidateBio
  *   ------------------------------------------------------
  *
  *   PROPS
- *   links
+ *   candidate
  *   
  */
 
-export default function ReadAlso (props) {
+export default function CandidateBio (props) {
   /* * * * * * * * * * * * * * * *
    *
    * PROPS & STATE
    *
    * * * * * * * * * * * * * * * */
-  const { links } = props
+  const { candidate } = props
+
+  /* * * * * * * * * * * * * * * *
+   *
+   * LOGIC
+   *
+   * * * * * * * * * * * * * * * */
+  const name = candidate ? candidate.name : null
+  const bio = candidate ? candidate.bio : null
 
   /* * * * * * * * * * * * * * * *
    *
    * ASSIGN CLASSES
    *
    * * * * * * * * * * * * * * * */
-  const c = 'primaires-democrates-read-also'
+  const c = 'primaires-democrates-candidate-bio'
   const classes = [c]
 
   /* * * * * * * * * * * * * * * *
@@ -31,13 +39,7 @@ export default function ReadAlso (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    <div>À lire aussi</div>
-    <div>
-      {(links || []).map(link => <div>
-        <a href={link.url} target='_blank'>
-          {link.title}
-        </a>
-      </div>)}
-    </div>
+    <div>{name}</div>
+    <div>{bio}</div>
   </div>
 }

@@ -1,39 +1,38 @@
 import React from 'react'
 import moment from 'moment'
-import State from '../State'
 
 /*
- *   Calendar
+ *   State
  *   ------------------------------------------------------
  *
  *   PROPS
- *   states, activateState
+ *   value, activateState
  *   
  */
 
-export default function Calendar (props) {
+export default function State (props) {
   /* * * * * * * * * * * * * * * *
    *
    * PROPS & STATE
    *
    * * * * * * * * * * * * * * * */
-  const { states, activateState } = props
+  const { value, activateState } = props
 
   /* * * * * * * * * * * * * * * *
    *
-   * LOGIC
+   * ACTION HANDLERS
    *
    * * * * * * * * * * * * * * * */
-  const chronoSortedStates = states.sort((stateA, stateB) => {
-    return moment(stateA.date, 'DD/MM/YYYY') - moment(stateB.date, 'DD/MM/YYYY')
-  })
+  function handleClick (e) {
+    if (activateState && value.id) activateState(value.id)
+  }
 
   /* * * * * * * * * * * * * * * *
    *
    * ASSIGN CLASSES
    *
    * * * * * * * * * * * * * * * */
-  const c = 'primaires-democrates-calendar'
+  const c = 'primaires-democrates-state'
   const classes = [c]
 
   /* * * * * * * * * * * * * * * *
@@ -41,10 +40,10 @@ export default function Calendar (props) {
    * RENDER
    *
    * * * * * * * * * * * * * * * */
-  return <div className={classes.join(' ')}>{
-    chronoSortedStates.map(state => <State
-      value={state}
-      key={state.id}
-      activateState={activateState} />)
-  }</div>
+  return <div
+    onClick={handleClick}
+    className={classes.join(' ')}>
+    <span>{moment(value.date, 'DD/MM/YYYY').format('DD MMMM')}</span>
+    <span>{value.name}</span>
+  </div>
 }

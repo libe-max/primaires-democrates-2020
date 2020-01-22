@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PageTitle from 'libe-components/lib/text-levels/PageTitle'
 import LibeLaboLogo from 'libe-components/lib/blocks/LibeLaboLogo'
 import ArticleMeta from 'libe-components/lib/blocks/ArticleMeta'
@@ -15,20 +15,6 @@ import ArticleMeta from 'libe-components/lib/blocks/ArticleMeta'
 export default function Header (props) {
   /* * * * * * * * * * * * * * * *
    *
-   * PROPS & STATE
-   *
-   * * * * * * * * * * * * * * * */
-  const { prop } = props
-  const [state, setState] = useState(null)
-
-  /* * * * * * * * * * * * * * * *
-   *
-   * ACTION HANDLERS
-   *
-   * * * * * * * * * * * * * * * */
-
-  /* * * * * * * * * * * * * * * *
-   *
    * ASSIGN CLASSES
    *
    * * * * * * * * * * * * * * * */
@@ -41,17 +27,16 @@ export default function Header (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    <PageTitle>
+    <PageTitle small>
       <span>PRIMAIRES DÉMOCRATES</span>
       <span>LA COURSE À L'INVESTITURE</span>
     </PageTitle>
+    <LibeLaboLogo />
     <ArticleMeta
-      publishedOn='02/09/2019 17:13'
-      updatedOn='03/09/2019 10:36'
       authors={[
-        { name: 'Jean-Sol Partre', role: '', link: 'www.liberation.fr' },
-        { name: 'Maxime Fabas', role: 'Production', link: 'lol.com' }
+        { name: 'Baptiste Bouthier', role: 'Réalisation' },
+        { name: 'Clara de Alberto', role: 'Réalisation' },
+        { name: 'Maxime Fabas', role: 'Réalisation' },
       ]} />
-    <LibeLaboLogo target='blank' />
   </div>
 }

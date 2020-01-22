@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Candidate from '../Candidate'
 
 /*
@@ -17,13 +17,6 @@ export default function Scores (props) {
    *
    * * * * * * * * * * * * * * * */
   const { candidates, activateCandidate } = props
-  const [state, setState] = useState(null)
-
-  /* * * * * * * * * * * * * * * *
-   *
-   * ACTION HANDLERS
-   *
-   * * * * * * * * * * * * * * * */
 
    /* * * * * * * * * * * * * * * *
    *

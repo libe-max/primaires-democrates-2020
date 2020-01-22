@@ -1,6 +1,4 @@
-import React, { useState } from 'react'
-import Paragraph from 'libe-components/lib/text-levels/Paragraph'
-import ParagraphTitle from 'libe-components/lib/text-levels/ParagraphTitle'
+import React from 'react'
 
 /*
  *   Candidate
@@ -18,7 +16,6 @@ export default function Candidate (props) {
    *
    * * * * * * * * * * * * * * * */
   const { value, activateCandidate } = props
-  const [state, setState] = useState(null)
 
   /* * * * * * * * * * * * * * * *
    *
@@ -52,8 +49,7 @@ export default function Candidate (props) {
   return <div
     onClick={handleClick}
     className={classes.join(' ')}>
-    <img src={value.photo} />
-    <ParagraphTitle>{value.name}</ParagraphTitle>
-    <Paragraph>{score} délégués</Paragraph>
+    <span>{value.name}</span>
+    <span>{score} délégués</span>
   </div>
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 /*
- *   StickyHeader
+ *   Explanations
  *   ------------------------------------------------------
  *
  *   PROPS
@@ -9,13 +9,13 @@ import React from 'react'
  *   
  */
 
-export default function StickyHeader (props) {
+export default function Explanations (props) {
   /* * * * * * * * * * * * * * * *
    *
    * ASSIGN CLASSES
    *
    * * * * * * * * * * * * * * * */
-  const c = 'primaires-democrates-sticky-header'
+  const c = 'primaires-democrates-explanations'
   const classes = [c]
 
   /* * * * * * * * * * * * * * * *
@@ -24,9 +24,6 @@ export default function StickyHeader (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    <div>
-      <span>PRIMAIRES DÉMOCRATES</span>
-      <span>LA COURSE À L'INVESTITURE</span>
-    </div>
+    Explanations
   </div>
 }

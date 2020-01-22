@@ -44,6 +44,8 @@ export default class App extends Component {
     this.watchKonamiCode = this.watchKonamiCode.bind(this)
     this.showExplanations = this.showExplanations.bind(this)
     this.activateCandidate = this.activateCandidate.bind(this)
+    this.activateState = this.activateState.bind(this)
+    this.closeDetailPanel = this.closeDetailPanel.bind(this)
   }
 
   /* * * * * * * * * * * * * * * * *
@@ -188,8 +190,34 @@ export default class App extends Component {
   activateCandidate (id) {
     this.setState({
       show_detail_panel: true,
-      detail_panel_mode: 'candidate-bio',
+      detail_panel_mode: 'candidate',
       detail_panel_content: id
+    })
+  }
+
+  /* * * * * * * * * * * * * * * * *
+   *
+   * ACTIVATE STATE
+   *
+   * * * * * * * * * * * * * * * * */
+  activateState (id) {
+    this.setState({
+      show_detail_panel: true,
+      detail_panel_mode: 'state',
+      detail_panel_content: id
+    })
+  }
+
+  /* * * * * * * * * * * * * * * * *
+   *
+   * CLOSE DETAIL PANEL
+   *
+   * * * * * * * * * * * * * * * * */
+  closeDetailPanel () {
+    this.setState({
+      show_detail_panel: false,
+      detail_panel_mode: null,
+      detail_panel_content: null
     })
   }
 
@@ -200,6 +228,7 @@ export default class App extends Component {
    * * * * * * * * * * * * * * * * */
   render () {
     const { c, state, props } = this
+    console.log(state)
 
     /* Assign classes */
     const classes = [c]
@@ -230,20 +259,31 @@ export default class App extends Component {
       <Scores
         candidates={state.data_sheet.candidates}
         activateCandidate={this.activateCandidate} />
-      <Calendar />
+      <Calendar
+        states={state.data_sheet.states}
+        activateState={this.activateState} />
       <Navigation />
-      <ReadAlso />
+      <ReadAlso links={state.data_sheet.links} />
       <DetailPanel
-        detailPanelMode={state.detail_panel_mode}
-        detailPanelContent={state.detail_panel_content} />
+        close={this.closeDetailPanel}
+        activateCandidate={this.activateCandidate}
+        mode={state.detail_panel_mode}
+        content={state.detail_panel_content}
+        candidates={state.data_sheet.candidates}
+        states={state.data_sheet.states} />
       <div className='lblb-default-apps-footer'>
-        <ShareArticle short iconsOnly tweet={props.meta.tweet} url={props.meta.url} />
+        <ShareArticle
+          short
+          iconsOnly
+          tweet={props.meta.tweet}
+          url={props.meta.url} />
         <ArticleMeta
-          publishedOn='02/09/2019 17:13' updatedOn='03/09/2019 10:36' authors={[
+          publishedOn='02/09/2019 17:13'
+          updatedOn='03/09/2019 10:36'
+          authors={[
             { name: 'Jean-Sol Partre', role: '', link: 'www.liberation.fr' },
             { name: 'Maxime Fabas', role: 'Production', link: 'lol.com' }
-          ]}
-        />
+          ]} />
         <LibeLaboLogo target='blank' />
       </div>
     </div>
