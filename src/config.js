@@ -4,11 +4,11 @@ const currentHostname = typeof window !== 'undefined' ? window.location.hostname
 const config = {
   meta: {
     author: 'Maxime Fabas',
-    title: 'Primaire démocrates 2020',
+    title: 'Primaires démocrates 2020',
     url: '',
     description: '',
     image: '',
-    xiti_id: 'primaire-democrates-2020',
+    xiti_id: 'primaires-democrates-2020',
     tweet: 'Some tweet text',
   },
   tracking: {
@@ -23,7 +23,7 @@ const config = {
   api_url: process.env.NODE_ENV === 'production'
     ? 'https://libe-labo-2.site/api'
     : `${currentProtocol}//${currentHostname}:3004/api`,
-  stylesheet: 'primaire-democrates.css',
+  stylesheet: 'primaires-democrates.css',
   spreadsheet: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT99eXOlXkLDOGU7ucGzQ0G9zZEsQkNuDdp8iMy58gkW9TEnMpjn9cnNmpgnPgz6PU0HdVbjciIbkAp/pub?gid=1987543395&single=true&output=tsv'
 }
 

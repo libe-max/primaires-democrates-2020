@@ -27,16 +27,35 @@ export default function Header (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    <PageTitle small>
-      <span>PRIMAIRES DÉMOCRATES</span>
-      <span>LA COURSE À L'INVESTITURE</span>
-    </PageTitle>
-    <LibeLaboLogo />
-    <ArticleMeta
-      authors={[
-        { name: 'Baptiste Bouthier', role: 'Réalisation' },
-        { name: 'Clara de Alberto', role: 'Réalisation' },
-        { name: 'Maxime Fabas', role: 'Réalisation' },
-      ]} />
+    <div className={`${c}_desktop`}>
+      <div className={`${c}_desktop-left`}>
+        <PageTitle small>
+          <span>PRIMAIRES DÉMOCRATES</span>
+          <span>LA COURSE À L'INVESTITURE</span>
+        </PageTitle>
+      </div>
+      <div className={`${c}_desktop-right`}>
+        <LibeLaboLogo />
+        <ArticleMeta
+          authors={[
+            { name: 'Baptiste Bouthier', role: 'Réalisation' },
+            { name: 'Clara de Alberto', role: 'Réalisation' },
+            { name: 'Maxime Fabas', role: 'Réalisation' },
+          ]} />
+      </div>
+    </div>
+    <div className={`${c}_mobile`}>
+      <PageTitle small>
+        <span>PRIMAIRES DÉMOCRATES</span>
+        <span>LA COURSE À L'INVESTITURE</span>
+      </PageTitle>
+      <LibeLaboLogo />
+      <ArticleMeta
+        authors={[
+          { name: 'Baptiste Bouthier', role: 'Réalisation' },
+          { name: 'Clara de Alberto', role: 'Réalisation' },
+          { name: 'Maxime Fabas', role: 'Réalisation' },
+        ]} />
+    </div>
   </div>
 }
