@@ -46,6 +46,7 @@ export default class App extends Component {
     this.activateCandidate = this.activateCandidate.bind(this)
     this.activateState = this.activateState.bind(this)
     this.closeDetailPanel = this.closeDetailPanel.bind(this)
+    this.scrollToContentStart = this.scrollToContentStart.bind(this)
   }
 
   /* * * * * * * * * * * * * * * * *
@@ -223,12 +224,27 @@ export default class App extends Component {
 
   /* * * * * * * * * * * * * * * * *
    *
+   * SCROLL TO CONTENT START
+   *
+   * * * * * * * * * * * * * * * * */
+  scrollToContentStart () {
+    const $intro = document.querySelector('.primaires-democrates-intro')
+    if (!$intro) return
+    const navHeight = window.LBLB_GLOBAL.nav_height
+    window.scroll({
+      top: $intro.offsetTop - navHeight,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  /* * * * * * * * * * * * * * * * *
+   *
    * RENDER
    *
    * * * * * * * * * * * * * * * * */
   render () {
     const { c, state, props } = this
-    console.log(state)
 
     /* Assign classes */
     const classes = [c]
@@ -251,7 +267,7 @@ export default class App extends Component {
 
     /* Display component */
     return <div className={classes.join(' ')}>
-      <Header />
+      <Header scrollToContentStart={this.scrollToContentStart} />
       <StickyHeader />
       <Intro
         advancement={advancement}

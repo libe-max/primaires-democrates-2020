@@ -33,7 +33,7 @@ export default function ReadAlso (props) {
   return <div className={classes.join(' ')}>
     <div>À lire aussi</div>
     <div>
-      {(links || []).map(link => <div>
+      {(links || []).map(link => <div key={link.title}>
         <a href={link.url} target='_blank'>
           {link.title}
         </a>
