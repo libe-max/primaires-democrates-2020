@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import State from '../State'
+import InterTitle from 'libe-components/lib/text-levels/InterTitle'
 
 /*
  *   Calendar
@@ -41,10 +42,11 @@ export default function Calendar (props) {
    * RENDER
    *
    * * * * * * * * * * * * * * * */
-  return <div className={classes.join(' ')}>{
-    chronoSortedStates.map(state => <State
+  return <div className={classes.join(' ')}>
+    <InterTitle level={2}>Le calendrier</InterTitle>
+    {chronoSortedStates.map(state => <State
       value={state}
       key={state.id}
-      activateState={activateState} />)
-  }</div>
+      activateState={activateState} />)}
+  </div>
 }

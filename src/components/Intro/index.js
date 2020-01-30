@@ -1,6 +1,8 @@
 import React from 'react'
 import moment from 'moment'
 import 'moment/locale/fr'
+import BlockTitle from 'libe-components/lib/text-levels/BlockTitle'
+import Paragraph from 'libe-components/lib/text-levels/Paragraph'
 
 /*
  *   Intro
@@ -50,16 +52,16 @@ export default function Intro (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    <div>
-      Au {today}<br />
-      il reste {100 - Math.round(advancement * 100)}% délégués à élire
-    </div>
-    <div>
+    <BlockTitle level={10}>
+      <span>Au {today}</span>
+      <span>il reste {100 - Math.round(advancement * 100)}% délégués à élire</span>
+    </BlockTitle>
+    <Paragraph>
       <a
         href='#'
         onClick={handleClick}>
         J'ai rien compris
       </a>
-    </div>
+    </Paragraph>
   </div>
 }

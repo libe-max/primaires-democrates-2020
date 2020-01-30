@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
+import handleViewport from 'react-in-viewport'
 import { parseTsv } from 'libe-utils'
 import Loader from 'libe-components/lib/blocks/Loader'
 import LoadingError from 'libe-components/lib/blocks/LoadingError'
@@ -14,6 +15,7 @@ import Calendar from './components/Calendar'
 import Navigation from './components/Navigation'
 import ReadAlso from './components/ReadAlso'
 import DetailPanel from './components/DetailPanel'
+const ViewportScores = handleViewport(Scores)
 
 export default class App extends Component {
   /* * * * * * * * * * * * * * * * *
@@ -23,7 +25,7 @@ export default class App extends Component {
    * * * * * * * * * * * * * * * * */
   constructor () {
     super()
-    this.c = 'lblb-some-app'
+    this.c = 'primaires-democrates'
     this.state = {
       loading_sheet: true,
       error_sheet: null,
@@ -32,6 +34,7 @@ export default class App extends Component {
         states: [],
         links: [],
       },
+      active_page: 'scores',
       show_detail_panel: false,
       detail_panel_mode: null,
       detail_panel_content: null,
@@ -47,6 +50,8 @@ export default class App extends Component {
     this.activateState = this.activateState.bind(this)
     this.closeDetailPanel = this.closeDetailPanel.bind(this)
     this.scrollToContentStart = this.scrollToContentStart.bind(this)
+    this.activateScores = this.activateScores.bind(this)
+    this.activateCalendar = this.activateCalendar.bind(this)
   }
 
   /* * * * * * * * * * * * * * * * *
@@ -106,7 +111,7 @@ export default class App extends Component {
       const reach = await window.fetch(this.props.spreadsheet)
       if (!reach.ok) throw reach
       const data = await reach.text()
-      const [candidates, states, links] = parseTsv(data, [62, 5, 2])
+      const [candidates, states, links] = parseTsv(data, [63, 5, 2])
       const transformedCandidates = candidates.map(candidate => {
         const result = { _scores: [] }
         Object.keys(candidate).forEach(key => {
@@ -216,9 +221,39 @@ export default class App extends Component {
    * * * * * * * * * * * * * * * * */
   closeDetailPanel () {
     this.setState({
-      show_detail_panel: false,
-      detail_panel_mode: null,
-      detail_panel_content: null
+      show_detail_panel: false
+    })
+  }
+
+  /* * * * * * * * * * * * * * * * *
+   *
+   * ACTIVATE SCORES
+   *
+   * * * * * * * * * * * * * * * * */
+  activateScores () {
+    this.setState({
+      active_page: 'scores',
+      show_detail_panel: false
+    }, () => {
+      if (window.LBLB_GLOBAL.current_display !== 'lg') {
+        this.scrollToContentStart()
+      }
+    })
+  }
+
+  /* * * * * * * * * * * * * * * * *
+   *
+   * ACTIVATE CALENDAR
+   *
+   * * * * * * * * * * * * * * * * */
+  activateCalendar () {
+    this.setState({
+      active_page: 'calendar',
+      show_detail_panel: false
+    }, () => {
+      if (window.LBLB_GLOBAL.current_display !== 'lg') {
+        this.scrollToContentStart()
+      }
     })
   }
 
@@ -250,6 +285,11 @@ export default class App extends Component {
     const classes = [c]
     if (state.loading_sheet) classes.push(`${c}_loading`)
     if (state.error_sheet) classes.push(`${c}_error`)
+    if (state.show_detail_panel) classes.push(`${c}_show-detail-panel`)
+    if (!state.show_detail_panel && state.active_page === 'scores') classes.push(`${c}_scores-is-active`)
+    else if (!state.show_detail_panel && state.active_page === 'calendar') classes.push(`${c}_calendar-is-active`)
+    else if (state.show_detail_panel && state.active_page === 'scores') classes.push(`${c}_go-back-to-scores`)
+    else if (state.show_detail_panel && state.active_page === 'calendar') classes.push(`${c}_go-back-to-calendar`)
 
     /* Load & errors */
     if (state.loading_sheet) return <div className={classes.join(' ')}><div className='lblb-default-apps-loader'><Loader /></div></div>
@@ -265,6 +305,11 @@ export default class App extends Component {
     const electDelegate = transformedStates.reduce((total, state) => state._passed ? total + Number(state.nb_delegates) : total, 0)
     const advancement = electDelegate / totalDelegates
 
+    /* Prevent body scroll when details is open */
+    const $body = document.querySelector('body')
+    if ($body && state.show_detail_panel) $body.classList.add('body_prevent-scroll')
+    else if ($body && !state.show_detail_panel) $body.classList.remove('body_prevent-scroll')
+
     /* Display component */
     return <div className={classes.join(' ')}>
       <Header scrollToContentStart={this.scrollToContentStart} />
@@ -272,14 +317,15 @@ export default class App extends Component {
       <Intro
         advancement={advancement}
         showExplanations={this.showExplanations} />
-      <Scores
+      <ViewportScores
         candidates={state.data_sheet.candidates}
         activateCandidate={this.activateCandidate} />
       <Calendar
         states={state.data_sheet.states}
         activateState={this.activateState} />
-      <Navigation />
-      <ReadAlso links={state.data_sheet.links} />
+      <Navigation
+        activateScores={this.activateScores}
+        activateCalendar={this.activateCalendar} />
       <DetailPanel
         close={this.closeDetailPanel}
         activateCandidate={this.activateCandidate}

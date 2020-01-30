@@ -58,7 +58,9 @@ export default function DetailPanel (props) {
    * RENDER
    *
    * * * * * * * * * * * * * * * */
-  return <div className={classes.join(' ')}>
+  return <div
+    style={{ top: `${window.LBLB_GLOBAL.nav_height}px` }}
+    className={classes.join(' ')}>
     <button onClick={handleButtonClick}>CLOSE</button>
     {child}
   </div>

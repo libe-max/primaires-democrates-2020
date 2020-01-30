@@ -2,6 +2,7 @@
   "name": "libe-apps-template",
   "version": "0.2.3",
   "private": true,
+  "homepage": "https://www.liberation.fr/apps/2020/01/primaires-democrates-2020",
   "dependencies": {
     "libe-components": "^1.2.0",
     "libe-utils": "^1.0.1",
@@ -9,6 +10,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
+    "react-in-viewport": "^1.0.0-alpha.11",
     "react-scripts": "^3.3.0",
     "whatwg-fetch": "^3.0.0"
   },

@@ -5,7 +5,7 @@ const config = {
   meta: {
     author: 'Maxime Fabas',
     title: 'Primaires démocrates 2020',
-    url: '',
+    url: 'https://www.liberation.fr/apps/2020/01/primaires-democrates-2020',
     description: '',
     image: '',
     xiti_id: 'primaires-democrates-2020',
