@@ -1,4 +1,6 @@
 import React from 'react'
+import JSXInterpreter from 'libe-components/lib/logic/JSXInterpreter'
+import Paragraph from 'libe-components/lib/text-levels/Paragraph'
 
 /*
  *   CandidateBio
@@ -22,6 +24,7 @@ export default function CandidateBio (props) {
    * LOGIC
    *
    * * * * * * * * * * * * * * * */
+  const photo = candidate ? candidate.photo : null
   const name = candidate ? candidate.name : null
   const bio = candidate ? candidate.bio : null
 
@@ -39,7 +42,20 @@ export default function CandidateBio (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    <div>{name}</div>
-    <div>{bio}</div>
+    <div className={`${c}__head`}>
+      <div
+        style={{ backgroundImage: `url(${photo})` }}
+        className={`${c}__photo`}>
+        {photo}
+      </div>
+      <div className={`${c}__name`}>
+        <Paragraph big>{name}</Paragraph>
+      </div>
+    </div>
+    <div className={`${c}__bio`}>
+      <div className='lblb-paragraph'>
+        <JSXInterpreter content={bio} />
+      </div>
+    </div>
   </div>
 }

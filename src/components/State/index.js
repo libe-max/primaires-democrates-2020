@@ -26,7 +26,7 @@ export default function State (props) {
    * INNER LOGIC
    *
    * * * * * * * * * * * * * * * */
-  const now = moment('22/04/2020', 'DD/MM/YYYY')
+  const now = moment()
   const momentDate = moment(value.date, 'DD/MM/YYYY')
   const displayDate = momentDate.format('DD MMMM')
   const isPassed = now > momentDate

@@ -111,7 +111,7 @@ export default class App extends Component {
       const reach = await window.fetch(this.props.spreadsheet)
       if (!reach.ok) throw reach
       const data = await reach.text()
-      const [candidates, states, links] = parseTsv(data, [63, 5, 2])
+      const [candidates, states, links] = parseTsv(data, [63, 5, 3])
       const transformedCandidates = candidates.map(candidate => {
         const result = { _scores: [] }
         Object.keys(candidate).forEach(key => {
@@ -121,7 +121,7 @@ export default class App extends Component {
             result._scores.push({
               state: key,
               delegates: Number((splValue[0] || '0').trim()),
-              percentage: Number((splValue[1] || '0%').trim().replace(/%/igm, '')) / 100
+              percentage: Number((splValue[1] || '0%').trim().replace(/,/igm, '.').replace(/%/igm, '')) / 100
             })
           }
         })
@@ -332,22 +332,9 @@ export default class App extends Component {
         mode={state.detail_panel_mode}
         content={state.detail_panel_content}
         candidates={state.data_sheet.candidates}
-        states={state.data_sheet.states} />
-      <div className='lblb-default-apps-footer'>
-        <ShareArticle
-          short
-          iconsOnly
-          tweet={props.meta.tweet}
-          url={props.meta.url} />
-        <ArticleMeta
-          publishedOn='02/09/2019 17:13'
-          updatedOn='03/09/2019 10:36'
-          authors={[
-            { name: 'Jean-Sol Partre', role: '', link: 'www.liberation.fr' },
-            { name: 'Maxime Fabas', role: 'Production', link: 'lol.com' }
-          ]} />
-        <LibeLaboLogo target='blank' />
-      </div>
+        states={state.data_sheet.states}
+        links={state.data_sheet.links} />
+      <ReadAlso links={state.data_sheet.links} />
     </div>
   }
 }

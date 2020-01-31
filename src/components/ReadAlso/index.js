@@ -1,4 +1,6 @@
 import React from 'react'
+import InterTitle from 'libe-components/lib/text-levels/InterTitle'
+import BlockTitle from 'libe-components/lib/text-levels/BlockTitle'
 
 /*
  *   ReadAlso
@@ -31,13 +33,22 @@ export default function ReadAlso (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div className={classes.join(' ')}>
-    <div>À lire aussi</div>
-    <div>
-      {(links || []).map(link => <div key={link.title}>
-        <a href={link.url} target='_blank'>
-          {link.title}
+    <InterTitle level={2}>À lire aussi</InterTitle>
+    <div className={`${c}__links`}>{
+      (links || []).map(link => (
+        <a
+          key={link.title}
+          href={link.url}
+          target='_blank'
+          className={`${c}__link`}>
+          <span className={`${c}__link-slug`}>
+            <BlockTitle level={10}>{link.slug} - </BlockTitle>
+          </span>
+          <span className={`${c}__link-title`}>
+            <BlockTitle level={10}>{link.title}</BlockTitle>
+          </span>
         </a>
-      </div>)}
-    </div>
+      ))
+    }</div>
   </div>
 }

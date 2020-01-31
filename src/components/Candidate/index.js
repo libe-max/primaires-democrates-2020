@@ -24,6 +24,7 @@ export default function Candidate (props) {
    *
    * * * * * * * * * * * * * * * */
   function handleClick (e) {
+    if (value.id === 'other') return
     if (activateCandidate && value.id) activateCandidate(value.id)
   }
 
