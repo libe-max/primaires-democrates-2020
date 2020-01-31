@@ -92,7 +92,7 @@ export default function Scores (props) {
       <Candidate
         isFirst={i === 0}
         key={candidate.id}
-        percentScore={candidate._total_score / maxScore}
+        percentScore={candidate._total_score / (maxScore || 1)}
         activateCandidate={activateCandidate}
         value={candidate} />
       )

@@ -41,12 +41,14 @@ export default function ReadAlso (props) {
           href={link.url}
           target='_blank'
           className={`${c}__link`}>
-          <span className={`${c}__link-slug`}>
-            <BlockTitle level={10}>{link.slug} - </BlockTitle>
-          </span>
-          <span className={`${c}__link-title`}>
-            <BlockTitle level={10}>{link.title}</BlockTitle>
-          </span>
+          <BlockTitle level={10}>
+            <span className={`${c}__link-slug`}>
+              {link.slug}
+            </span>
+            <span className={`${c}__link-title`}>
+              {link.title}
+            </span>
+          </BlockTitle>
         </a>
       ))
     }</div>
