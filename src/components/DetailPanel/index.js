@@ -1,7 +1,9 @@
 import React from 'react'
+import Svg from 'libe-components/lib/primitives/Svg'
 import Explanations from '../Explanations'
 import CandidateBio from '../CandidateBio'
 import StateDetails from '../StateDetails'
+import { statics_url as staticsUrl } from '../../config'
 
 /*
  *   DetailPanel
@@ -29,6 +31,16 @@ export default function DetailPanel (props) {
   function handleButtonClick (e) {
     if (e && e.preventDefault) e.preventDefault()
     if (close) close()
+  }
+
+  function handleBackgroundClick (e) {
+    if (e && e.preventDefault) e.preventDefault()
+    if (e.target === e.currentTarget && close) close()
+  }
+
+  function handleInnerClick (e) {
+    if (e && e.preventDefault) e.preventDefault()
+    if (e.target === e.currentTarget && close) close()
   }
 
   /* * * * * * * * * * * * * * * *
@@ -59,9 +71,20 @@ export default function DetailPanel (props) {
    *
    * * * * * * * * * * * * * * * */
   return <div
+    onClick={handleBackgroundClick}
     style={{ top: `${window.LBLB_GLOBAL.nav_height}px` }}
     className={classes.join(' ')}>
-    <button onClick={handleButtonClick}>CLOSE</button>
-    {child}
+    <div
+      onClick={handleInnerClick}
+      className={`${c}__inner-1`}>
+      <div className={`${c}__inner-2`}>
+        <button
+          onClick={handleButtonClick}
+          className={`${c}__close`}>
+          <Svg src={`${staticsUrl}/assets/tilted-cross-icon_40.svg`} />
+        </button>
+        {child}
+      </div>
+    </div>
   </div>
 }

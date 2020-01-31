@@ -37,7 +37,7 @@ export default function State (props) {
    *
    * * * * * * * * * * * * * * * */
   function handleClick (e) {
-    if (activateState && value.id) activateState(value.id)
+    if (activateState && value.id && isPassed) activateState(value.id)
   }
 
   /* * * * * * * * * * * * * * * *
