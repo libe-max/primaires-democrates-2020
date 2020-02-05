@@ -39,8 +39,8 @@ export default function Explanations (props) {
         onClick={e => console.log(e)}
         href='https://www.liberation.fr/planete/2020/02/03/etats-unis-tout-comprendre-aux-primaires-democrates_1775574'
         target='_blank'
-        noreferrer={true}
-        noopener={true}>
+        noreferrer='true'
+        noopener='true'>
         Je veux en savoir encore plus
       </a>
     </Paragraph>
