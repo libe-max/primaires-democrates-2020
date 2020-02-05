@@ -5,8 +5,6 @@ import { parseTsv } from 'libe-utils'
 import Loader from 'libe-components/lib/blocks/Loader'
 import LoadingError from 'libe-components/lib/blocks/LoadingError'
 import ShareArticle from 'libe-components/lib/blocks/ShareArticle'
-import LibeLaboLogo from 'libe-components/lib/blocks/LibeLaboLogo'
-import ArticleMeta from 'libe-components/lib/blocks/ArticleMeta'
 import Header from './components/Header'
 import StickyHeader from './components/StickyHeader'
 import Intro from './components/Intro'
@@ -304,6 +302,15 @@ export default class App extends Component {
     const totalDelegates = transformedStates.reduce((total, state) => total + Number(state.nb_delegates), 0)
     const electDelegate = transformedStates.reduce((total, state) => state._passed ? total + Number(state.nb_delegates) : total, 0)
     const advancement = electDelegate / totalDelegates
+    const sortedCandidates = state.data_sheet.candidates.map(candidate => {
+      return {
+        name: candidate.name,
+        score: candidate._scores.reduce((total, state) => {
+          return total + Number(state.delegates)
+        }, 0)
+      }
+    }).sort((canA, canB) => canB.score - canA.score)
+    const leadingCandidate = sortedCandidates[0].name
 
     /* Prevent body scroll when details is open */
     const $body = document.querySelector('body')
@@ -314,6 +321,12 @@ export default class App extends Component {
     return <div className={classes.join(' ')}>
       <Header scrollToContentStart={this.scrollToContentStart} />
       <StickyHeader />
+      <div className={`${c}-share`}>
+        <ShareArticle
+          tweet={`${leadingCandidate} mène la course à l'investiture pour la Maison blanche ! Faites le point sur le marathon électoral des primaires démocrates`}
+          iconsOnly
+          short />
+      </div>
       <Intro
         advancement={advancement}
         showExplanations={this.showExplanations} />

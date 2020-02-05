@@ -4,10 +4,10 @@ const currentHostname = typeof window !== 'undefined' ? window.location.hostname
 const config = {
   meta: {
     author: 'Maxime Fabas',
-    title: 'Primaires démocrates 2020',
+    title: 'Primaires démocrates : la course à l\'investiture',
     url: 'https://www.liberation.fr/apps/2020/02/primaires-democrates-2020',
-    description: '',
-    image: '',
+    description: 'Sanders, Biden, Buttigieg ou Warren : qui défiera Donald Trump à la présidentielle américaine de novembre 2020 ? Suivez la course à l\'investiture démocrate et retrouvez les résultats Etat par Etat grâce à notre page dédiée.',
+    image: 'https://www.liberation.fr/apps/2020/02/primaires-democrates-2020/social.jpg',
     xiti_id: 'primaires-democrates-2020',
     tweet: 'Some tweet text',
   },
