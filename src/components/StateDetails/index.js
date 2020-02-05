@@ -39,6 +39,7 @@ export default function StateDetails (props) {
   })
   const sortedScores = scores.sort((scoreA, scoreB) => {
     return scoreB.delegates - scoreA.delegates
+      || scoreB.percentage - scoreA.percentage
   })
   const maxDelegates = Math.max(...sortedScores.map(score => score.delegates))
 

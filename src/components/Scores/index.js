@@ -32,6 +32,7 @@ export default function Scores (props) {
   }))
   const maxScore = Math.max(...reducedScoreCandidates.map(candidate => candidate._total_score))
   const sortedCandidates = [...reducedScoreCandidates].sort((canA, canB) => canB._total_score - canA._total_score)
+  const filteredCandidates = sortedCandidates.filter(candidate => candidate.racing === '1')
 
   /* * * * * * * * * * * * * * * *
    *
@@ -88,7 +89,7 @@ export default function Scores (props) {
   return <div
     ref={forwardedRef}
     className={classes.join(' ')}>
-    {sortedCandidates.map((candidate, i) => (
+    {filteredCandidates.map((candidate, i) => (
       <Candidate
         isFirst={i === 0}
         key={candidate.id}

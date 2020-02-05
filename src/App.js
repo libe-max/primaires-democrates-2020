@@ -296,9 +296,9 @@ export default class App extends Component {
     if (state.error_sheet) return <div className={classes.join(' ')}><div className='lblb-default-apps-error'><LoadingError /></div></div>
 
     /* Inner logic */
-    const today = moment().endOf('day')
+    const today = moment().startOf('day')
     const transformedStates = state.data_sheet.states.map(state => {
-      const voteDate = moment(state.date, 'DD/MM/YYYY')
+      const voteDate = moment(state.date, 'DD/MM/YYYY').endOf('day')
       return { ...state, _passed: voteDate < today }
     })
     const totalDelegates = transformedStates.reduce((total, state) => total + Number(state.nb_delegates), 0)

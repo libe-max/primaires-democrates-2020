@@ -35,12 +35,10 @@ export default function DetailPanel (props) {
   }
 
   function handleBackgroundClick (e) {
-    if (e && e.preventDefault) e.preventDefault()
     if (e.target === e.currentTarget && close) close()
   }
 
   function handleInnerClick (e) {
-    if (e && e.preventDefault) e.preventDefault()
     if (e.target === e.currentTarget && close) close()
   }
 

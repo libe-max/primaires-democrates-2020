@@ -54,13 +54,13 @@ export default function Intro (props) {
   return <div className={classes.join(' ')}>
     <BlockTitle level={10}>
       <span>Au {today}</span>
-      <span>il reste {100 - Math.round(advancement * 100)}% délégués à élire</span>
+      <span>il reste {100 - Math.round(advancement * 100)}% des délégués à élire</span>
     </BlockTitle>
     <Paragraph>
       <a
         href='#'
         onClick={handleClick}>
-        J'ai rien compris
+        Comment ça marche ?
       </a>
     </Paragraph>
   </div>

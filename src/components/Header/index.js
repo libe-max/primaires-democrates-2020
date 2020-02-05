@@ -58,7 +58,7 @@ export default function Header (props) {
         <ArticleMeta
           authors={[
             { name: 'Baptiste Bouthier', role: 'Réalisation' },
-            { name: 'Clara de Alberto', role: 'Réalisation' },
+            { name: 'Clara Dealberto', role: 'Réalisation' },
             { name: 'Maxime Fabas', role: 'Réalisation' },
           ]} />
       </div>
@@ -72,7 +72,7 @@ export default function Header (props) {
       <ArticleMeta
         authors={[
           { name: 'Baptiste Bouthier', role: 'Réalisation' },
-          { name: 'Clara de Alberto', role: 'Réalisation' },
+          { name: 'Clara Dealberto', role: 'Réalisation' },
           { name: 'Maxime Fabas', role: 'Réalisation' },
         ]} />
       <button onClick={handleScrollButtonClick}>
