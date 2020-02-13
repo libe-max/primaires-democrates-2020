@@ -9,7 +9,7 @@ import { statics_url as staticsUrl } from '../../config'
  *   ------------------------------------------------------
  *
  *   PROPS
- *   value, activateState
+ *   value, activateState, isPassed
  *   
  */
 
@@ -26,10 +26,8 @@ export default function State (props) {
    * INNER LOGIC
    *
    * * * * * * * * * * * * * * * */
-  const now = moment()
   const momentDate = moment(value.date, 'DD/MM/YYYY')
-  const displayDate = momentDate.format('DD MMMM')
-  const isPassed = now > momentDate
+  const displayDate = momentDate.format('D MMMM')
 
   /* * * * * * * * * * * * * * * *
    *
@@ -37,7 +35,7 @@ export default function State (props) {
    *
    * * * * * * * * * * * * * * * */
   function handleClick (e) {
-    if (activateState && value.id && isPassed) activateState(value.id)
+    if (activateState && value.id && value._is_passed) activateState(value.id)
   }
 
   /* * * * * * * * * * * * * * * *
@@ -47,7 +45,7 @@ export default function State (props) {
    * * * * * * * * * * * * * * * */
   const c = 'primaires-democrates-state'
   const classes = [c]
-  if (isPassed) classes.push(`${c}_is-passed`)
+  if (value._is_passed) classes.push(`${c}_is-passed`)
 
   /* * * * * * * * * * * * * * * *
    *

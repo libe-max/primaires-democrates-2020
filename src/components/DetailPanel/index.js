@@ -88,6 +88,7 @@ export default function DetailPanel (props) {
           <div className={`${c}__links`}>{
             (links || []).map(link => (
               <a
+                rel='noopener noreferrer'
                 key={link.title}
                 href={link.url}
                 target='_blank'

@@ -37,7 +37,10 @@ export default function StateDetails (props) {
       percentage: score ? score.percentage : 0
     }
   })
-  const sortedScores = scores.sort((scoreA, scoreB) => {
+  const filteredScores = scores.filter(score => {
+    return score.delegates !== null & score.percentage !== null
+  })
+  const sortedScores = filteredScores.sort((scoreA, scoreB) => {
     return scoreB.delegates - scoreA.delegates
       || scoreB.percentage - scoreA.percentage
   })

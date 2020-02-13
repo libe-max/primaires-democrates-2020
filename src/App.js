@@ -113,24 +113,37 @@ export default class App extends Component {
       const transformedCandidates = candidates.map(candidate => {
         const result = { _scores: [] }
         Object.keys(candidate).forEach(key => {
-          if (key.match(/^id|name|bio|photo|racing$/)) result[key] = candidate[key]
-          else {
+          if (key.match(/^id$|^name$|^bio$|^photo$|^racing$|^short_name$/)) {
+            result[key] = candidate[key]
+          } else {
             const splValue = candidate[key].split(';')
             result._scores.push({
               state: key,
-              delegates: Number((splValue[0] || '0').trim()),
-              percentage: Number((splValue[1] || '0%').trim().replace(/,/igm, '.').replace(/%/igm, '')) / 100
+              delegates: splValue[0] !== '' ? Number((splValue[0]).trim()) : null,
+              percentage: splValue[1] !== undefined ? Number((splValue[1]).trim().replace(/,/igm, '.').replace(/%/igm, '')) / 100 : null
             })
           }
         })
         return result
+      })
+      const transformedStates = states.map(state => {
+        const scores = transformedCandidates.map(candidate => {
+          const thisStateScore = candidate._scores.filter(score => score.state === state.id)[0]
+          return thisStateScore
+        })
+        const isPassed = scores.some(score => (score.delegates !== null || score.percentage !== null))
+        return {
+          ...state,
+          _scores: scores,
+          _is_passed: isPassed
+        }
       })
       this.setState({
         loading_sheet: false,
         error_sheet: null,
         data_sheet: {
           candidates: transformedCandidates,
-          states,
+          states: transformedStates,
           links
         }
       })
@@ -295,12 +308,8 @@ export default class App extends Component {
 
     /* Inner logic */
     const today = moment().startOf('day')
-    const transformedStates = state.data_sheet.states.map(state => {
-      const voteDate = moment(state.date, 'DD/MM/YYYY').endOf('day')
-      return { ...state, _passed: voteDate < today }
-    })
-    const totalDelegates = transformedStates.reduce((total, state) => total + Number(state.nb_delegates), 0)
-    const electDelegate = transformedStates.reduce((total, state) => state._passed ? total + Number(state.nb_delegates) : total, 0)
+    const totalDelegates = state.data_sheet.states.reduce((total, state) => total + Number(state.nb_delegates), 0)
+    const electDelegate = state.data_sheet.states.reduce((total, state) => state._is_passed ? total + Number(state.nb_delegates) : total, 0)
     const advancement = electDelegate / totalDelegates
     const sortedCandidates = state.data_sheet.candidates.map(candidate => {
       return {
