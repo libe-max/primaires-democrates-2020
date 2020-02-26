@@ -344,6 +344,7 @@ export default class App extends Component {
         activateCandidate={this.activateCandidate} />
       <Calendar
         states={state.data_sheet.states}
+        totalDelegates={totalDelegates}
         activateState={this.activateState} />
       <Navigation
         activateScores={this.activateScores}

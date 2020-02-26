@@ -8,7 +8,7 @@ import InterTitle from 'libe-components/lib/text-levels/InterTitle'
  *   ------------------------------------------------------
  *
  *   PROPS
- *   states, activateState
+ *   states, totalDelegates, activateState
  *   
  */
 
@@ -47,6 +47,7 @@ export default function Calendar (props) {
     {chronoSortedStates.map(state => <State
       value={state}
       key={state.id}
+      totalDelegates={props.totalDelegates}
       activateState={activateState} />)}
   </div>
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import BlockTitle from 'libe-components/lib/text-levels/BlockTitle'
+import Paragraph from 'libe-components/lib/text-levels/Paragraph'
 import Svg from 'libe-components/lib/primitives/Svg'
 import { statics_url as staticsUrl } from '../../config'
 
@@ -9,7 +10,7 @@ import { statics_url as staticsUrl } from '../../config'
  *   ------------------------------------------------------
  *
  *   PROPS
- *   value, activateState, isPassed
+ *   value, activateState, isPassed, totalDelegates
  *   
  */
 
@@ -19,7 +20,7 @@ export default function State (props) {
    * PROPS & STATE
    *
    * * * * * * * * * * * * * * * */
-  const { value, activateState } = props
+  const { value, activateState, totalDelegates } = props
 
   /* * * * * * * * * * * * * * * *
    *
@@ -57,13 +58,19 @@ export default function State (props) {
     className={classes.join(' ')}>
     <div className={`${c}__date`}>
       <BlockTitle level={10}>
-        {displayDate}&nbsp;-&nbsp;
+        {displayDate}
       </BlockTitle>
     </div>
     <div className={`${c}__name`}>
       <BlockTitle level={10}>
-        {value.name}
+        &nbsp;-&nbsp;{value.name}
       </BlockTitle>
+    </div>
+    <div className={`${c}__nb-delegates`}>
+      <Paragraph small>&nbsp;-&nbsp;{value.nb_delegates} délégués</Paragraph>
+    </div>
+    <div className={`${c}__percent-delegates`}>
+      <Paragraph small>({Math.floor((value.nb_delegates / totalDelegates) * 1000) / 10}%)</Paragraph>
     </div>
     <div className={`${c}__see-detail`}>
       <button>
